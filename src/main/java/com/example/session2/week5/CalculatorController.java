@@ -3,6 +3,7 @@ package com.example.session2.week5;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api/calculator")
 public class CalculatorController {
     private final CalculatorService calculatorService;
 
@@ -10,20 +11,26 @@ public class CalculatorController {
         this.calculatorService = calculatorService;
     }
 
-//    @GetMapping("/add")
-//    public int addTwoNumbers(@RequestParam int number1,
-//                             @RequestParam int number2)
-//    {return number1 + number2;}
-
-    @GetMapping("/add")
-    public int addTwoNumbers (@RequestBody CalculatorAddRequest request){
+    @PostMapping("/add")
+    public int addTwoNumbers(@RequestBody CalculatorRequest request){
         return calculatorService.add(request.getNumber1(), request.getNumber2());
+    }
 
+    @PostMapping("/subtract")
+    public int subtractTwoNumbers(
+            @RequestBody CalculatorRequest request){
+        return calculatorService.subtract(request.getNumber1(), request.getNumber2());
     }
 
     @PostMapping("/multiply")
     public int multiplyTwoNumbers(
-            @RequestBody CalculatorMultiplyRequest request){
+            @RequestBody CalculatorRequest request){
         return calculatorService.multiply(request.getNumber1(), request.getNumber2());
+    }
+
+    @PostMapping("/divide")
+    public int divideTwoNumbers(
+            @RequestBody CalculatorRequest request){
+        return calculatorService.divide(request.getNumber1(), request.getNumber2());
     }
 }
